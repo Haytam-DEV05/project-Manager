@@ -2,16 +2,18 @@ import { GrProjects } from "react-icons/gr";
 import InfoBox from "../partials/InfoBox";
 import Project from "../partials/Project";
 import CreateProject from "../partials/Popups/CreateProject";
+import { useContext, useState } from "react";
+import { ProjectContext } from "../Context/ProjectContext";
 
-import { useState } from "react";
 export default function Home() {
+  const { cartProjects } = useContext(ProjectContext);
   const [openCreateProject, setOpenCreateProject] = useState(false);
   const closePopup = () => {
     setOpenCreateProject(false);
   };
   return (
     <section id="home" className="home relative">
-      {openCreateProject && <CreateProject closePopup={closePopup}/>}
+      {openCreateProject && <CreateProject closePopup={closePopup} />}
       <div className="contqiner-box grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 my-5">
         <InfoBox icon={<GrProjects />} number="2" description="projects" />
         <InfoBox icon={<GrProjects />} number="5" description="To Do" />
@@ -28,10 +30,9 @@ export default function Home() {
         </button>
       </div>
       <div className="projects mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-        {/* <Project />
-        <Project />
-        <Project />
-        <Project /> */}
+        {cartProjects.map((p) => {
+          return <Project data={p} key={p.id} />;
+        })}
       </div>
     </section>
   );
