@@ -2,20 +2,24 @@ import { FaSearch } from "react-icons/fa";
 
 export default function Navbar() {
   return (
-    <nav className="bg-red-900 border-b-3 border-black">
-      <div className="container min-h-20 md:flex justify-between items-center max-w-[98%] mx-auto">
-        <div className="logo flex items-center">
-          <span className="bg-green-400 p-2 rounded-2xl text-[20px] font-black me-1">
+    <nav className="bg-white border-b border-gray-200 shadow-sm">
+      <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <span className="bg-green-500 text-white px-3 py-2 rounded-xl text-lg font-black">
             PM
           </span>
-          <h1 className="text-[25px] font-black">Project Manager</h1>
+          <h1 className="text-2xl font-black text-gray-800">Project Manager</h1>
         </div>
-        <div className="flex bg-green-500 items-center py-2 px-5 rounded-4xl mt-4 md:mt-0">
-          <FaSearch size={25} className="me-2" />
+
+        <div className="hidden md:flex items-center gap-3 bg-gray-100 px-4 py-2 rounded-xl">
+          <FaSearch className="text-gray-500" />
           <input
             type="text"
-            placeholder="Search Tasks..."
-            className="outline-0 py-1"
+            placeholder="Search projects or tasks..."
+            className="
+              bg-transparent outline-none text-sm
+              placeholder-gray-400 w-56
+            "
           />
         </div>
       </div>

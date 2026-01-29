@@ -2,22 +2,50 @@ import { useNavigate } from "react-router";
 
 export default function Project({ data }) {
   const navigate = useNavigate();
-  const handleBtnDetaille = (id) => {
-    navigate(`/Projects/${id}`);
-  };
+
+  const totalTasks = data.tasks.length;
+  const doneTasks = data.done.length;
+  const progress =
+    totalTasks > 0 ? Math.round((doneTasks / totalTasks) * 100) : 0;
+
   return (
     <div
-      className="project bg-red-700 px-7 py-12 rounded-md cursor-pointer"
-      onClick={() => handleBtnDetaille(data.id)}
+      onClick={() => navigate(`/Projects/${data.id}`)}
+      className="
+        bg-white p-6 rounded-xl shadow
+        hover:shadow-lg transition cursor-pointer
+        border border-gray-100
+      "
     >
-      {/* icon */}
-      <h1 className="text-[22px] font-semibold">{data.titleProject}</h1>
-      <p className="text-[18px] font-normal line-clamp-1 mt-3">
-        {data.descriptionProject}
-      </p>
-      <div className="bottom-project flex justify-between my-4">
-        <p className="text-[17px] font-medium">Tasks :{data.tasks.length}</p>
-        <p className="text-[17px] font-medium">Done : {data.done.length}</p>
+      {/* Header */}
+      <div className="mb-4">
+        <h3 className="text-xl font-semibold text-gray-800">
+          {data.titleProject}
+        </h3>
+        <p className="text-gray-500 text-sm line-clamp-2 mt-1">
+          {data.descriptionProject}
+        </p>
+      </div>
+
+      {/* Stats */}
+      <div className="flex justify-between text-sm text-gray-600 mb-3">
+        <span>Tasks: {totalTasks}</span>
+        <span>Done: {doneTasks}</span>
+      </div>
+
+      {/* Progress */}
+      <div>
+        <div className="flex justify-between text-xs mb-1">
+          <span className="text-gray-500">Progress</span>
+          <span className="font-semibold">{progress}%</span>
+        </div>
+
+        <div className="w-full h-2 bg-gray-200 rounded-full">
+          <div
+            className="h-2 bg-green-500 rounded-full transition-all"
+            style={{ width: `${progress}%` }}
+          />
+        </div>
       </div>
     </div>
   );

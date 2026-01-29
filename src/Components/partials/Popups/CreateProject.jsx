@@ -1,64 +1,77 @@
 import { useState, useContext } from "react";
-import { IoMdCloseCircle } from "react-icons/io";
+import { IoMdClose } from "react-icons/io";
 import { ProjectContext } from "../../Context/ProjectContext";
 
 export default function CreateProject({ closePopup }) {
   const { createProject } = useContext(ProjectContext);
+
   const [formInputs, setFormInputs] = useState({
     titleProject: "",
     descriptionProject: "",
-    tasks: 0,
-    done: 0,
+    tasks: [],
+    done: [],
   });
 
-  //   HANDLE FORM =>
-  const handleBtnForm = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const { titleProject, descriptionProject } = formInputs;
-    if (titleProject && descriptionProject) {
-      createProject({ id: Date.now(), ...formInputs });
-      closePopup();
-    } else {
-      return alert("pelas all the field");
-    }
+
+    if (!formInputs.titleProject || !formInputs.descriptionProject) return;
+
+    createProject({
+      id: Date.now(),
+      ...formInputs,
+    });
+
+    closePopup();
   };
 
   return (
-    <div className="flex absolute justify-center items-center flex-col min-h-screen min-w-[95%] md:-top-[20%]">
-      <div className="container-create bg-green-400 p-10">
-        <div className="header flex items-center justify-between">
-          <h3>Create New Project</h3>
-          <IoMdCloseCircle
-            size={25}
-            className="cursor-pointer"
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+      
+      {/* Modal */}
+      <div className="bg-white w-full max-w-lg rounded-2xl shadow-xl p-6 animate-fadeIn">
+        
+        {/* Header */}
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-xl font-bold text-gray-800">
+            Create New Project
+          </h3>
+          <IoMdClose
+            size={26}
+            className="cursor-pointer text-gray-500 hover:text-red-500"
             onClick={closePopup}
           />
         </div>
-        <form className="mt-5" onSubmit={handleBtnForm}>
-          <div className="my-3">
-            <label htmlFor="" className="text-[18px] font-semibold">
+
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="space-y-4">
+          
+          <div>
+            <label className="text-sm font-medium text-gray-600">
               Project Title
             </label>
             <input
               type="text"
-              placeholder="Enter Project Name..."
-              className="w-full border border-black py-1 px-3 outline-0"
-              required
+              placeholder="Enter project title..."
+              className="w-full mt-1 px-4 py-2 border rounded-lg outline-none focus:ring-2 focus:ring-green-400"
               value={formInputs.titleProject}
               onChange={(e) =>
-                setFormInputs({ ...formInputs, titleProject: e.target.value })
+                setFormInputs({
+                  ...formInputs,
+                  titleProject: e.target.value,
+                })
               }
             />
           </div>
+
           <div>
-            <label htmlFor="" className="text-[18px] font-semibold">
+            <label className="text-sm font-medium text-gray-600">
               Description
             </label>
             <textarea
-              className="w-full border border-black py-1 px-3 outline-0"
-              name="description"
-              id="description"
-              placeholder="Describe Your Project..."
+              placeholder="Describe your project..."
+              className="w-full mt-1 px-4 py-2 border rounded-lg outline-none resize-none focus:ring-2 focus:ring-green-400"
+              rows={4}
               value={formInputs.descriptionProject}
               onChange={(e) =>
                 setFormInputs({
@@ -66,19 +79,22 @@ export default function CreateProject({ closePopup }) {
                   descriptionProject: e.target.value,
                 })
               }
-            ></textarea>
+            />
           </div>
-          <div className="buttons mt-4">
+
+          {/* Actions */}
+          <div className="flex justify-end gap-3 pt-4">
             <button
-              className="border border-white text-white bg-transparent py-1 px-4 rounded-3xl cursor-pointer me-5"
-              onClick={(e) => {
-                closePopup();
-                e.stopPropagation();
-              }}
+              type="button"
+              onClick={closePopup}
+              className="px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-100"
             >
               Cancel
             </button>
-            <button className="bg-green-300 text-black rounded-2xl py-1 px-6 cursor-pointer">
+            <button
+              type="submit"
+              className="px-5 py-2 rounded-lg bg-green-500 text-white hover:bg-green-600 transition"
+            >
               Create Project
             </button>
           </div>

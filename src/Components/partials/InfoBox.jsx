@@ -1,10 +1,10 @@
 export default function InfoBox({ icon, number, description }) {
   return (
-    <div className="box bg-red-400 py-10 px-7 rounded-3xl flex justify-center items-center gap-2 hover:shadow-2xl transition-shadow duration-300">
-      <div className="icon bg-green-300 py-2 px-4 rounded-md">{icon}</div>
-      <div className="info">
-        <h1>{number}</h1>
-        <p>{description}</p>
+    <div className="p-10 bg-white rounded-xl shadow flex items-center gap-4 hover:shadow-2xl">
+      <div className="text-3xl text-green-500">{icon}</div>
+      <div>
+        <p className="text-2xl font-bold">{number}</p>
+        <p className="text-gray-500 text-sm">{description}</p>
       </div>
     </div>
   );

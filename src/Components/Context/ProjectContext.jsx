@@ -17,8 +17,8 @@ export function ProjectProvider({ children }) {
     },
     {
       id: 2,
-      titleProject: "monomom",
-      descriptionProject: "helkjdflkjdlwkjdfldjljk",
+      titleProject: "create a graet cv",
+      descriptionProject: "in this project i will create a powerfol cv",
       tasks: [
         { id: 1, task: "make a cv" },
         { id: 2, task: "complete the home components" },
@@ -31,8 +31,8 @@ export function ProjectProvider({ children }) {
   const createProject = (data) => {
     setCartProject([...cartProjects, data]);
   };
+
   //   const totalTodo = () => {};
-  //   const totalInProgresse = () => {};
   //   const totalComplete = () => {};
 
   return (
