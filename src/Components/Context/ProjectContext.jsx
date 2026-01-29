@@ -9,37 +9,31 @@ export function ProjectProvider({ children }) {
       id: 1,
       titleProject: "hello",
       descriptionProject: "helkjdflkjdljk",
-      done: 0,
-      tasks: 0,
+      tasks: [
+        { id: 1, task: "make the architecture of the project" },
+        { id: 2, task: "complete the home components" },
+      ],
+      done: [{ id: 1 }],
     },
     {
       id: 2,
       titleProject: "monomom",
       descriptionProject: "helkjdflkjdlwkjdfldjljk",
-      done: 0,
-      tasks: 0,
-    },
-    {
-      id: 3,
-      titleProject: "bonnoo",
-      descriptionProject: "helkjdflk;lqkfljk ladkfjkljd jdljk",
-      done: 0,
-      tasks: 0,
-    },
-    {
-      id: 4,
-      titleProject: "holla",
-      descriptionProject: "helkjdflkfj dlafkjlad fkladfj o;lkllkjdljk",
-      done: 0,
-      tasks: 0,
+      tasks: [
+        { id: 1, task: "make a cv" },
+        { id: 2, task: "complete the home components" },
+        { id: 3, task: "make the cv" },
+        { id: 4, task: "make the portfolio" },
+      ],
+      done: [{ id: 1 }, { id: 3 }],
     },
   ]);
   const createProject = (data) => {
     setCartProject([...cartProjects, data]);
   };
-//   const totalTodo = () => {};
-//   const totalInProgresse = () => {};
-//   const totalComplete = () => {};
+  //   const totalTodo = () => {};
+  //   const totalInProgresse = () => {};
+  //   const totalComplete = () => {};
 
   return (
     <ProjectContext.Provider value={{ createProject, cartProjects }}>

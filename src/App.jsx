@@ -1,14 +1,9 @@
-import Navbar from "./Components/Templates/Navbar/Navbar";
-import Home from "./Components/Pages/Home";
-import { ProjectProvider } from "./Components/Context/ProjectContext";
+import Header from "./Components/Templates/Header/Header";
 
 export default function App() {
   return (
     <>
-      <Navbar />
-      <ProjectProvider>
-        <Home />
-      </ProjectProvider>
+      <Header />
     </>
   );
 }
