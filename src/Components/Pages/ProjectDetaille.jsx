@@ -1,11 +1,13 @@
 import { useNavigate, useParams } from "react-router";
 import { useContext, useEffect, useState } from "react";
 import { ProjectContext } from "../Context/ProjectContext";
+import CreateTask from "../partials/Popups/CreateTask";
 
 export default function ProjectDetaille() {
   const { id } = useParams();
   const { cartProjects } = useContext(ProjectContext);
   const [project, setProject] = useState(null);
+  const [openCart, setOpenCart] = useState(false);
 
   useEffect(() => {
     const found = cartProjects.find((p) => p.id == id);
@@ -15,6 +17,11 @@ export default function ProjectDetaille() {
   const handleBtnReturn = () => {
     navigate("/");
   };
+
+  const closeCart = () => {
+    setOpenCart(false);
+  };
+
   if (!project) {
     return (
       <div className="ms-20 my-10">
@@ -40,13 +47,16 @@ export default function ProjectDetaille() {
   return (
     <section className="p-8 max-w-6xl mx-auto">
       {/* Header */}
-      <div className="mb-8">
+      <div className="mb-8 relative">
         <h1 className="text-4xl font-bold">{project.titleProject}</h1>
         <p className="text-gray-500 mt-2">{project.descriptionProject}</p>
+        <button className="text-[16px] bg-green-300 text-green-600 absolute right-0 cursor-pointer rounded-2xl px-5 py-1" onClick={() => setOpenCart(!openCart)}>
+          + new Task
+        </button>
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-2 gap-6 mb-10">
+      <div className="grid grid-cols-2 gap-6 my-10">
         <Stat title="Todo" value={todoTasks.length} color="red" />
         <Stat title="Done" value={doneTasks.length} color="green" />
       </div>
@@ -56,6 +66,7 @@ export default function ProjectDetaille() {
         <TaskColumn title="Todo" tasks={todoTasks} />
         <TaskColumn title="Done" tasks={doneTasks} />
       </div>
+      {openCart && <CreateTask closeCart={closeCart}/>}
     </section>
   );
 }
