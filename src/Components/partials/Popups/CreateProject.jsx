@@ -9,7 +9,6 @@ export default function CreateProject({ closePopup }) {
     titleProject: "",
     descriptionProject: "",
     tasks: [],
-    done: [],
   });
 
   const handleSubmit = (e) => {

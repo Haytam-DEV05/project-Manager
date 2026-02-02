@@ -1,23 +1,33 @@
 import { useState } from "react";
 import { IoMdClose } from "react-icons/io";
+import { useContext } from "react";
+import { ProjectContext } from "../../Context/ProjectContext";
+import { useParams } from "react-router";
 
 export default function CreateTask({ closeCart }) {
+  const { id } = useParams();
+  const { createTasks } = useContext(ProjectContext);
   const [formInputs, setFormInputs] = useState({
     task: "",
     genre: "",
+    done: false,
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formInputs);
+    createTasks(id, {
+      id: Date.now(),
+      task: formInputs.task,
+      done: formInputs.genre === "complete" ? true : false,
+    });
   };
-  const handleClosePopup = (e) => {
+  function handleClosePopup(e) {
     e.preventDefault();
     closeCart();
-  };
+  }
   return (
     <div className="min-h-screen fixed inset-0 flex justify-center items-center bg-black/40 backdrop-blur-sm">
-      <form className="bg-gray-100 min-w-[90%] md:min-w-150 p-10 rounded-2xl">
+      <form className="bg-gray-100 min-w-[95%] md:min-w-150 p-10 rounded-2xl">
         <div className="bg-red-900 relative mb-5">
           <IoMdClose
             size={26}

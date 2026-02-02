@@ -11,6 +11,7 @@ export default function ProjectDetaille() {
 
   useEffect(() => {
     const found = cartProjects.find((p) => p.id == id);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setProject(found);
   }, [id, cartProjects]);
   const navigate = useNavigate();
@@ -38,19 +39,25 @@ export default function ProjectDetaille() {
     );
   }
 
-  const doneIds = project.done.map((d) => d.id);
-
-  const doneTasks = project.tasks.filter((t) => doneIds.includes(t.id));
-
-  const todoTasks = project.tasks.filter((t) => !doneIds.includes(t.id));
+  const doneTasks = project.tasks.filter((ele) => ele.done);
+  const todoTasks = project.tasks.filter((ele) => !ele.done);
 
   return (
     <section className="p-8 max-w-6xl mx-auto">
       {/* Header */}
       <div className="mb-8 relative">
+        <button
+          className="text-white bg-green-300 cursor-pointer py-1 px-5 mb-5"
+          onClick={handleBtnReturn}
+        >
+          Return Home
+        </button>
         <h1 className="text-4xl font-bold">{project.titleProject}</h1>
         <p className="text-gray-500 mt-2">{project.descriptionProject}</p>
-        <button className="text-[16px] bg-green-300 text-green-600 absolute right-0 cursor-pointer rounded-2xl px-5 py-1" onClick={() => setOpenCart(!openCart)}>
+        <button
+          className="text-[16px] bg-green-300 text-green-600 absolute right-0 cursor-pointer rounded-2xl px-5 py-1"
+          onClick={() => setOpenCart(!openCart)}
+        >
           + new Task
         </button>
       </div>
@@ -66,7 +73,7 @@ export default function ProjectDetaille() {
         <TaskColumn title="Todo" tasks={todoTasks} />
         <TaskColumn title="Done" tasks={doneTasks} />
       </div>
-      {openCart && <CreateTask closeCart={closeCart}/>}
+      {openCart && <CreateTask closeCart={closeCart} />}
     </section>
   );
 }

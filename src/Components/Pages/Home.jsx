@@ -16,9 +16,13 @@ export default function Home() {
 
   const totalTasks = cartProjects.reduce((acc, p) => acc + p.tasks.length, 0);
 
-  const totalDone = cartProjects.reduce((acc, p) => acc + p.done.length, 0);
+  const totalDone = cartProjects.reduce((acc, p) => {
+    if (p.tasks.done) {
+      return (acc + 1);
+    }
+  }, 0);
 
-  const totalTodo = totalTasks - totalDone;
+  // const totalTodo = totalTasks - totalDone;
 
   return (
     <section className="p-8 max-w-7xl mx-auto relative">
@@ -31,7 +35,11 @@ export default function Home() {
           number={totalProjects}
           description="Projects"
         />
-        <InfoBox icon={<GrProjects />} number={totalTodo} description="To Do" />
+        <InfoBox
+          icon={<GrProjects />}
+          number={totalTasks}
+          description="To Do"
+        />
         <InfoBox
           icon={<GrProjects />}
           number={totalDone}
@@ -42,24 +50,36 @@ export default function Home() {
       {/* Header */}
       <div className="sm:flex justify-between items-center mb-6">
         <h2 className="text-4xl font-bold text-gray-800">Your Projects</h2>
-
-        <button
-          className="bg-green-500 hover:bg-green-600 transition
+        {cartProjects.length > 0 && (
+          <button
+            className="bg-green-500 hover:bg-green-600 transition
                      py-2 px-6 text-white rounded-lg shadow min-w-full mt-3 sm:min-w-fit sm:mt-0"
-          onClick={() => setOpenCreateProject(true)}
-        >
-          + New Project
-        </button>
+            onClick={() => setOpenCreateProject(true)}
+          >
+            + New Project
+          </button>
+        )}
       </div>
 
       {/* Projects */}
       {cartProjects.length === 0 ? (
-        <p className="text-gray-400 text-center mt-20">No projects yet</p>
+        <div className="max-w-fit mx-auto">
+          <p className="text-gray-400 text-center block mb-4">
+            No projects yet
+          </p>
+          <button
+            className="bg-green-500 hover:bg-green-600 transition py-2 px-6 text-white rounded-lg shadow min-w-full sm:min-w-fit sm:mt-0"
+            onClick={() => setOpenCreateProject(true)}
+          >
+            Create First Project
+          </button>
+        </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {cartProjects.map((p) => (
-            <Project data={p} key={p.id} />
-          ))}
+          {cartProjects.map((p) => {
+            console.log(p);
+            return <Project data={p} key={p.id} />;
+          })}
         </div>
       )}
     </section>

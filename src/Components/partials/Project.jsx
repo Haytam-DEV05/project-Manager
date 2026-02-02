@@ -2,9 +2,17 @@ import { useNavigate } from "react-router";
 
 export default function Project({ data }) {
   const navigate = useNavigate();
+  console.log(data);
 
   const totalTasks = data.tasks.length;
-  const doneTasks = data.done.length;
+  let doneTasks = 0;
+  if (data.tasks.length > 0) {
+    data.tasks.foreach((ele) => {
+      if (ele.done) {
+        ++doneTasks;
+      }
+    });
+  }
   const progress =
     totalTasks > 0 ? Math.round((doneTasks / totalTasks) * 100) : 0;
 
