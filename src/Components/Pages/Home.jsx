@@ -2,7 +2,7 @@ import { GrProjects } from "react-icons/gr";
 import InfoBox from "../partials/InfoBox";
 import Project from "../partials/Project";
 import CreateProject from "../partials/Popups/CreateProject";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ProjectContext } from "../Context/ProjectContext";
 
 export default function Home() {
@@ -16,11 +16,14 @@ export default function Home() {
 
   const totalTasks = cartProjects.reduce((acc, p) => acc + p.tasks.length, 0);
 
-  const totalDone = cartProjects.reduce((acc, p) => {
-    if (p.tasks.done) {
-      return (acc + 1);
-    }
-  }, 0);
+  let doneTasks = 0;
+  cartProjects.map((ele) => {
+    ele.tasks.map((d) => {
+      if (d.done) {
+        ++doneTasks;
+      }
+    });
+  });
 
   // const totalTodo = totalTasks - totalDone;
 
@@ -42,7 +45,7 @@ export default function Home() {
         />
         <InfoBox
           icon={<GrProjects />}
-          number={totalDone}
+          number={doneTasks}
           description="Completed"
         />
       </div>
@@ -68,7 +71,7 @@ export default function Home() {
             No projects yet
           </p>
           <button
-            className="bg-green-500 hover:bg-green-600 transition py-2 px-6 text-white rounded-lg shadow min-w-full sm:min-w-fit sm:mt-0"
+            className="bg-green-500 hover:bg-green-600 transition py-2 px-6 text-white rounded-lg shadow min-w-full sm:min-w-fit sm:mt-0 cursor-pointer"
             onClick={() => setOpenCreateProject(true)}
           >
             Create First Project

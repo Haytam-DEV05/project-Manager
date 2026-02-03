@@ -4,27 +4,26 @@ import { createContext, useState } from "react";
 export const ProjectContext = createContext();
 
 export function ProjectProvider({ children }) {
+  
   const [cartProjects, setCartProject] = useState([
-    // {
-    //   id: 1,
-    //   titleProject: "hello",
-    //   descriptionProject: "helkjdflkjdljk",
-    //   tasks: [
-    //     { id: 1, task: "make the architecture of the project", done: true },
-    //     { id: 2, task: "complete the home components", done: false },
-    //   ],
-    // },
-    // {
-    //   id: 2,
-    //   titleProject: "create a graet cv",
-    //   descriptionProject: "in this project i will create a powerfol cv",
-    //   tasks: [
-    //     { id: 1, task: "make a cv", done: false },
-    //     { id: 2, task: "complete the home components", done: true },
-    //     { id: 3, task: "make the cv", done: false },
-    //     { id: 4, task: "make the portfolio", done: false },
-    //   ],
-    // },
+    {
+      id: 1,
+      titleProject: "create api",
+      descriptionProject: "in this project i will create apowerfull api",
+      tasks: [
+        { id: 1, task: "make the structure of the project", done: true },
+        { id: 2, task: "start in the routes and databases", done: false },
+      ],
+    },
+    {
+      id: 2,
+      titleProject: "create a graet cv",
+      descriptionProject: "in this project i will create a powerfol cv",
+      tasks: [
+        { id: 1, task: "make the structure of cv", done: false },
+        { id: 2, task: "choice the color of the cv", done: true },
+      ],
+    },
   ]);
 
   const createProject = (data) => {

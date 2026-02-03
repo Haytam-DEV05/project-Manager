@@ -1,5 +1,6 @@
 import { useNavigate, useParams } from "react-router";
 import { useContext, useEffect, useState } from "react";
+import { BsThreeDots } from "react-icons/bs";
 import { ProjectContext } from "../Context/ProjectContext";
 import CreateTask from "../partials/Popups/CreateTask";
 
@@ -104,8 +105,14 @@ function TaskColumn({ title, tasks }) {
       ) : (
         <ul className="space-y-3">
           {tasks.map((task) => (
-            <li key={task.id} className="p-3 bg-gray-100 rounded-lg text-sm">
-              {task.task}
+            <li
+              key={task.id}
+              className="p-3 bg-gray-100 rounded-lg text-sm"
+            >
+              <span className="cursor-pointer bg-red-500 block relative">
+                <BsThreeDots className="absolute right-0"/>
+              </span>
+              <p className="mt-5">{task.task}</p>
             </li>
           ))}
         </ul>
