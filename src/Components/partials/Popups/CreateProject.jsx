@@ -27,10 +27,8 @@ export default function CreateProject({ closePopup }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
       
-      {/* Modal */}
       <div className="bg-white w-full max-w-lg rounded-2xl shadow-xl p-6 animate-fadeIn">
         
-        {/* Header */}
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-xl font-bold text-gray-800">
             Create New Project
@@ -42,7 +40,6 @@ export default function CreateProject({ closePopup }) {
           />
         </div>
 
-        {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
           
           <div>

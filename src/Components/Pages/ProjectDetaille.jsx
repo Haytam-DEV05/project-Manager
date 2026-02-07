@@ -2,7 +2,9 @@ import { useNavigate, useParams } from "react-router";
 import { useContext, useEffect, useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
 import { ProjectContext } from "../Context/ProjectContext";
+import ParamTask from "../partials/Popups/ParamTask";
 import CreateTask from "../partials/Popups/CreateTask";
+import UpdateTask from "../partials/Popups/UpdateTask";
 
 export default function ProjectDetaille() {
   const { id } = useParams();
@@ -53,8 +55,10 @@ export default function ProjectDetaille() {
         >
           Return Home
         </button>
-        <h1 className="text-4xl font-bold">{project.titleProject}</h1>
-        <p className="text-gray-500 mt-2">{project.descriptionProject}</p>
+        <div className="info-project py-5 px-1">
+          <h1 className="text-4xl font-bold">{project.titleProject}</h1>
+          <p className="text-gray-500 mt-2">{project.descriptionProject}</p>
+        </div>
         <button
           className="text-[16px] bg-green-300 text-green-600 absolute right-0 cursor-pointer rounded-2xl px-5 py-1"
           onClick={() => setOpenCart(!openCart)}
@@ -64,22 +68,24 @@ export default function ProjectDetaille() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-2 gap-6 my-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-10 py-3">
         <Stat title="Todo" value={todoTasks.length} color="red" />
         <Stat title="Done" value={doneTasks.length} color="green" />
       </div>
 
       {/* Tasks */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <TaskColumn title="Todo" tasks={todoTasks} />
-        <TaskColumn title="Done" tasks={doneTasks} />
+        <TaskColumn title="Todo" tasks={todoTasks} idProject={id} />
+        <TaskColumn title="Done" tasks={doneTasks} idProject={id} />
       </div>
       {openCart && <CreateTask closeCart={closeCart} />}
     </section>
   );
 }
 
+// ==============================
 /* Small Components */
+// ==============================
 
 function Stat({ title, value, color }) {
   const colors = {
@@ -95,7 +101,15 @@ function Stat({ title, value, color }) {
   );
 }
 
-function TaskColumn({ title, tasks }) {
+function TaskColumn({ title, tasks, idProject }) {
+  const [openParam, setOpenParam] = useState(false);
+  const [taskToUpdate, setTaskToUpdate] = useState(null);
+  const openPopup = (task) => {
+    setTaskToUpdate(task);
+  };
+  const closePopup = () => {
+    setTaskToUpdate(null);
+  };
   return (
     <div className="bg-white p-5 rounded-xl shadow">
       <h3 className="font-semibold text-lg mb-4">{title}</h3>
@@ -107,15 +121,30 @@ function TaskColumn({ title, tasks }) {
           {tasks.map((task) => (
             <li
               key={task.id}
-              className="p-3 bg-gray-100 rounded-lg text-sm"
+              className="p-3 bg-gray-100 rounded-lg text-sm relative"
             >
-              <span className="cursor-pointer bg-red-500 block relative">
-                <BsThreeDots className="absolute right-0"/>
+              {openParam === task.id && (
+                <ParamTask
+                  task={task}
+                  idProject={idProject}
+                  openPopup={openPopup}
+                />
+              )}
+              <span className="cursor-pointer block relative">
+                <BsThreeDots
+                  className="absolute right-0"
+                  onClick={() =>
+                    setOpenParam(openParam === task.id ? null : task.id)
+                  }
+                />
               </span>
               <p className="mt-5">{task.task}</p>
             </li>
           ))}
         </ul>
+      )}
+      {taskToUpdate && (
+        <UpdateTask closePopup={closePopup} task={taskToUpdate} />
       )}
     </div>
   );

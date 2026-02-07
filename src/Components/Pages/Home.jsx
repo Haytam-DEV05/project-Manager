@@ -2,7 +2,7 @@ import { GrProjects } from "react-icons/gr";
 import InfoBox from "../partials/InfoBox";
 import Project from "../partials/Project";
 import CreateProject from "../partials/Popups/CreateProject";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { ProjectContext } from "../Context/ProjectContext";
 
 export default function Home() {
@@ -80,7 +80,6 @@ export default function Home() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {cartProjects.map((p) => {
-            console.log(p);
             return <Project data={p} key={p.id} />;
           })}
         </div>

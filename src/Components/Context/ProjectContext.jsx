@@ -4,7 +4,6 @@ import { createContext, useState } from "react";
 export const ProjectContext = createContext();
 
 export function ProjectProvider({ children }) {
-  
   const [cartProjects, setCartProject] = useState([
     {
       id: 1,
@@ -29,10 +28,8 @@ export function ProjectProvider({ children }) {
   const createProject = (data) => {
     setCartProject([...cartProjects, data]);
   };
-  const createTasks = (id, task) => {
-    console.log(id, task);
-    console.log(cartProjects);
 
+  const createTasks = (id, task) => {
     setCartProject(
       cartProjects.map((p) => {
         if (p.id == id) {
@@ -44,9 +41,24 @@ export function ProjectProvider({ children }) {
     );
   };
 
+  const deleteTask = (idProject, idTask) => {
+    setCartProject(
+      cartProjects.map((p) => {
+        if (p.id == idProject) {
+          return {
+            ...p,
+            tasks: p.tasks.filter((ele) => ele.id != idTask),
+          };
+        } else {
+          return p;
+        }
+      }),
+    );
+  };
+
   return (
     <ProjectContext.Provider
-      value={{ createProject, cartProjects, createTasks }}
+      value={{ createProject, cartProjects, createTasks, deleteTask }}
     >
       {children}
     </ProjectContext.Provider>

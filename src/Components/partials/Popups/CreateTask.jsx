@@ -20,6 +20,7 @@ export default function CreateTask({ closeCart }) {
       task: formInputs.task,
       done: formInputs.genre === "complete" ? true : false,
     });
+    closeCart();
   };
   function handleClosePopup(e) {
     e.preventDefault();
